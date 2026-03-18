@@ -177,6 +177,6 @@ class Ps_Contactinfo extends Module implements WidgetInterface
             ],
         ]);
 
-        return implode($output);
+        return implode('', $output);
     }
 }
