@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite name="ps_contactinfo">
+            <file>PsContactinfoCacheHookTest.php</file>
+            <file>PsContactinfoConstructorTest.php</file>
+            <file>PsContactinfoGetContentTest.php</file>
+            <file>PsContactinfoInstallTest.php</file>
+            <file>PsContactinfoLoadGuardTest.php</file>
+            <file>PsContactinfoRenderWidgetTest.php</file>
+            <file>PsContactinfoTemplateContractTest.php</file>
+            <file>PsContactinfoUpgradeTest.php</file>
+            <file>PsContactinfoWidgetVariablesTest.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>

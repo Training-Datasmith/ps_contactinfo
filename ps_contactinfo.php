@@ -72,7 +72,7 @@ class Ps_Contactinfo extends Module implements WidgetInterface
             $hookName = $configuration['hook'];
         }
 
-        if (preg_match('/^displayNav\d*$/', $hookName)) {
+        if (is_string($hookName) && preg_match('/^displayNav\d*$/', $hookName)) {
             $template_file = $this->templates['light'];
         } elseif (in_array($hookName, ['displayContactLeftColumn', 'displayContactRightColumn', 'displayLeftColumn', 'displayRightColumn'])) {
             $template_file = $this->templates['rich'];
@@ -98,7 +98,7 @@ class Ps_Contactinfo extends Module implements WidgetInterface
                 'address2' => $address->address2,
                 'postcode' => $address->postcode,
                 'city' => $address->city,
-                'state' => (!empty($address->id_state) ? (new State($address->id_state))->name[$this->context->language->id] : null),
+                'state' => (!empty($address->id_state) ? (new State($address->id_state))->name : null),
                 'country' => (new Country($address->id_country))->name[$this->context->language->id],
             ],
             'phone' => Configuration::get('PS_SHOP_PHONE'),
