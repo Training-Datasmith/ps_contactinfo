@@ -60,6 +60,7 @@ class PsContactinfoWidgetVariablesTest extends PsContactinfoTestCase
         Validate::$isCleanHtmlResult = false;
 
         $variables = $this->module->getWidgetVariables('displayFooter', array());
+        $this->assertContains('<script>alert(1)</script>', Validate::$isCleanHtmlArguments);
         $this->assertSame('', $variables['contact_infos']['address']['formatted']);
         $this->assertSame('10 Rue de Rivoli', $variables['contact_infos']['address']['address1']);
     }

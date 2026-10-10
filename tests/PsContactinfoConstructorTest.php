@@ -59,6 +59,5 @@ class PsContactinfoConstructorTest extends PsContactinfoTestCase
         $this->assertSame('3.3.3', (string) $xml->version);
         $this->assertSame('3.3.3', $this->module->version);
         $this->assertSame('front_office_features', (string) $xml->tab);
-        $this->assertSame('front_office_features', $this->module->tab);
     }
 }

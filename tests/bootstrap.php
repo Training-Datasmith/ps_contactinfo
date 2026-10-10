@@ -226,7 +226,11 @@ class Tools
 
     public static function getValue($name)
     {
-        return self::$getValue;
+        if ($name === 'PS_CONTACT_INFO_DISPLAY_EMAIL') {
+            return self::$getValue;
+        }
+
+        return false;
     }
 
     public static function redirectAdmin($url)
@@ -249,10 +253,28 @@ class RedirectAdminException extends Exception
 
 class HelperForm
 {
-    public $submit_action;
     public $fields_value = array();
     public static $lastGenerateFormArgument;
     public static $lastFieldsValue = array();
+    public static $lastSubmitAction;
+
+    public function __set($name, $value)
+    {
+        if ($name === 'submit_action') {
+            self::$lastSubmitAction = $value;
+
+            return;
+        }
+
+        $this->$name = $value;
+    }
+
+    public function __get($name)
+    {
+        if ($name === 'submit_action') {
+            return self::$lastSubmitAction;
+        }
+    }
 
     public function generateForm($form)
     {
@@ -266,6 +288,7 @@ class HelperForm
     {
         self::$lastGenerateFormArgument = null;
         self::$lastFieldsValue = array();
+        self::$lastSubmitAction = null;
     }
 }
 
@@ -295,15 +318,19 @@ class AddressFormat
 class Validate
 {
     public static $isCleanHtmlResult = true;
+    public static $isCleanHtmlArguments = array();
 
     public static function isCleanHtml($value)
     {
+        self::$isCleanHtmlArguments[] = $value;
+
         return self::$isCleanHtmlResult;
     }
 
     public static function resetStubState()
     {
         self::$isCleanHtmlResult = true;
+        self::$isCleanHtmlArguments = array();
     }
 }
 

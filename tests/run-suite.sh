@@ -7,6 +7,7 @@ PHAR="/tmp/phpunit-5.7.27.phar"
 PHAR_ASC="/tmp/phpunit-5.7.27.phar.asc"
 PHAR_SHA256="f0300a13f2653bee10b0ce24dbc8d94e65dc9be8966d822b9e455b6b294be16e"
 GPG_KEY="D8406D0D82947747293778314AA394086372C20A"
+GPG_KEYRING="/tmp/phpunit-5.7.27-signers.gpg"
 
 ensure_phpunit_phar() {
   if [[ ! -f "$PHAR" || ! -f "$PHAR_ASC" ]]; then
@@ -14,10 +15,14 @@ ensure_phpunit_phar() {
     curl -fsSL -o "$PHAR_ASC" https://phar.phpunit.de/phpunit-5.7.27.phar.asc
   fi
 
-  gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$GPG_KEY" >/dev/null 2>&1 || \
-    gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$GPG_KEY" >/dev/null 2>&1
+  local gpg_home
+  gpg_home=$(mktemp -d)
+  gpg --homedir "$gpg_home" --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$GPG_KEY" >/dev/null 2>&1 || \
+    gpg --homedir "$gpg_home" --batch --keyserver hkps://keys.openpgp.org --recv-keys "$GPG_KEY" >/dev/null 2>&1
+  gpg --homedir "$gpg_home" --batch --export "$GPG_KEY" > "$GPG_KEYRING"
+  rm -rf "$gpg_home"
 
-  gpg --batch --verify "$PHAR_ASC" "$PHAR"
+  gpgv --keyring "$GPG_KEYRING" "$PHAR_ASC" "$PHAR"
   echo "${PHAR_SHA256}  ${PHAR}" | sha256sum -c -
 }
 

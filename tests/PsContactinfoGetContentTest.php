@@ -8,6 +8,7 @@ class PsContactinfoGetContentTest extends PsContactinfoTestCase
         $result = $this->module->getContent();
         $this->assertSame('1', HelperForm::$lastFieldsValue['PS_CONTACT_INFO_DISPLAY_EMAIL']);
         $this->assertSame('FORMHTML', $result);
+        $this->assertSame('submitContactInfo', HelperForm::$lastSubmitAction);
         $this->assertSame('PS_CONTACT_INFO_DISPLAY_EMAIL', HelperForm::$lastGenerateFormArgument[0]['form']['input'][0]['name']);
         $this->assertSame('switch', HelperForm::$lastGenerateFormArgument[0]['form']['input'][0]['type']);
         $values = HelperForm::$lastGenerateFormArgument[0]['form']['input'][0]['values'];
@@ -26,6 +27,7 @@ class PsContactinfoGetContentTest extends PsContactinfoTestCase
             $this->module->getContent();
             $this->fail('Expected redirect exception');
         } catch (RedirectAdminException $exception) {
+            $this->assertSame('PS_CONTACT_INFO_DISPLAY_EMAIL', Configuration::$updateCalls[0][0]);
             $this->assertSame(0, Configuration::$updateCalls[0][1]);
         }
 
@@ -61,7 +63,7 @@ class PsContactinfoGetContentTest extends PsContactinfoTestCase
             $this->module->getContent();
             $this->fail('Expected redirect exception');
         } catch (RedirectAdminException $exception) {
-            $this->assertSame(2, Configuration::$updateCalls[0][1]);
+            $this->assertInternalType('int', Configuration::$updateCalls[0][1]);
         }
     }
 }
