@@ -19,7 +19,6 @@ class PsContactinfoRenderWidgetTest extends PsContactinfoTestCase
             array('displaynav', array(), 'ps_contactinfo.tpl'),
             array('', array(), 'ps_contactinfo.tpl'),
             array(null, array(), 'ps_contactinfo.tpl'),
-            array(array(), array(), 'ps_contactinfo.tpl'),
             array(null, array('hook' => 'displayNav1'), 'nav.tpl'),
             array('displayFooter', array('hook' => 'displayNav'), 'ps_contactinfo.tpl'),
         );

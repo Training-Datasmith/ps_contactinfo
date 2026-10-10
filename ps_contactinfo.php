@@ -72,7 +72,7 @@ class Ps_Contactinfo extends Module implements WidgetInterface
             $hookName = $configuration['hook'];
         }
 
-        if (is_string($hookName) && preg_match('/^displayNav\d*$/', $hookName)) {
+        if (preg_match('/^displayNav\d*$/', $hookName)) {
             $template_file = $this->templates['light'];
         } elseif (in_array($hookName, ['displayContactLeftColumn', 'displayContactRightColumn', 'displayLeftColumn', 'displayRightColumn'])) {
             $template_file = $this->templates['rich'];
